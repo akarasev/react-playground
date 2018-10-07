@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import styles from './Person.css';
 
+import Auxiliary from '../../../hoc/Auxiliary';
+import withClass from '../../../hoc/withClass';
+
 class Person extends Component {
   constructor(props) {
     super(props);
@@ -20,16 +23,16 @@ class Person extends Component {
     console.log('[Person.js] render');
 
     return (
-      <div className={styles.Person}>
+      <Auxiliary>
         <p onClick={ this.props.click }>
           I'm {this.props.name} and I'm {this.props.age} years old
          </p>
         <p>{this.props.children}</p>
         <input type="text" onChange={this.props.changed} value={this.props.name} />
-      </div>
+      </Auxiliary>
     )
   }
 }
 
-export default Person;
+export default withClass(Person, styles.Person);
 

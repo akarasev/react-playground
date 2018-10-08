@@ -6,6 +6,8 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Auxiliary from '../hoc/Auxiliary';
 import withClass from '../hoc/withClass';
 
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -40,7 +42,8 @@ class App extends PureComponent {
       { id: '03', name: "Natali", age: 27 }
     ],
     showPersons: false,
-    toggleClicked: 0
+    toggleClicked: 0,
+    authenticated: false
   }
 
   nameChangedHandler = (event, personId) => {
@@ -74,6 +77,10 @@ class App extends PureComponent {
     this.setState({persons: items});
   }
 
+  loginHandler = () => {
+    this.setState({authenticated: true});
+  }
+
   render() {
     console.log('[App.js] render');
 
@@ -93,9 +100,12 @@ class App extends PureComponent {
         <Cockpit
           appTitle={this.props.title}
           showPersons={this.state.showPersons}
+          login={this.loginHandler}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler} />
-        {persons}
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
       </Auxiliary>
     );
   }
